@@ -5,7 +5,7 @@ async function main() {
   console.log(`account: ${deployer.address}`);
 
   const bridge = await ethers.getContractFactory("Bridge", deployer);
-  const res = await upgrades.deployProxy(bridge, []);
+  const res = await upgrades.upgradeProxy("0x3ed62137c5DB927cb137c26455969116BF0c23Cb", bridge);
   await res.deployed();
 
   console.log('bridge address: ' + res.address);
