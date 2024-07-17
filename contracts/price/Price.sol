@@ -10,7 +10,7 @@ contract Price is IPrice {
     function getDBCPrice() public view override returns (uint256) {
         (bool success, bytes memory returnData) = precompile.staticcall(
             abi.encodeWithSignature(
-                "getDBCPrice"
+                "getDBCPrice()"
             )
         );
         require(success, string(returnData));
