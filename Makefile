@@ -8,7 +8,9 @@ upgrade-logic:
 	npx hardhat run scripts/upgrade-logic.ts --network dbcTestnet
 
 verify-logic:
-	npx hardhat verify --network dbcTestnet 0x97FF2a3fB3EAD119f38621C92354Dc3491e5B977
+	npx hardhat verify --network dbcTestnet   0x125f08a8bc122fD543b687a5F844Ec1361d706C2
+
+
 
 
 
