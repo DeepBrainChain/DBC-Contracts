@@ -2967,29 +2967,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bridge@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "bridge@workspace:."
-  dependencies:
-    "@nomiclabs/hardhat-ethers": ^2.2.2
-    "@nomiclabs/hardhat-etherscan": ^3.1.7
-    "@nomiclabs/hardhat-waffle": ^2.0.5
-    "@openzeppelin/contracts": 4.9.3
-    "@openzeppelin/contracts-upgradeable": 4.9.3
-    "@openzeppelin/hardhat-upgrades": ^1.7.2
-    "@typechain/ethers-v5": ^10.2.0
-    "@typechain/hardhat": ^6.1.5
-    dotenv: ^16.1.4
-    ethereum-waffle: ^3.4.4
-    handlebars: ^4.7.7
-    hardhat: ^2.13.0
-    solhint: ^3.4.1
-    ts-node: ^10.7.0
-    typechain: ^8.1.1
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
 "brorand@npm:^1.0.1, brorand@npm:^1.1.0":
   version: 1.1.0
   resolution: "brorand@npm:1.1.0"
@@ -10539,6 +10516,29 @@ __metadata:
   checksum: bbb54b84232ef113ee106cf8158d1c827fbf84b309799576f61603f63d7653fde7e71df981d07f9e4c41781bbbbd72be77e5a47e6b694d6a83b96a6a20641475
   languageName: node
   linkType: hard
+
+"system@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "system@workspace:."
+  dependencies:
+    "@nomiclabs/hardhat-ethers": ^2.2.2
+    "@nomiclabs/hardhat-etherscan": ^3.1.7
+    "@nomiclabs/hardhat-waffle": ^2.0.5
+    "@openzeppelin/contracts": 4.9.3
+    "@openzeppelin/contracts-upgradeable": 4.9.3
+    "@openzeppelin/hardhat-upgrades": ^1.7.2
+    "@typechain/ethers-v5": ^10.2.0
+    "@typechain/hardhat": ^6.1.5
+    dotenv: ^16.1.4
+    ethereum-waffle: ^3.4.4
+    handlebars: ^4.7.7
+    hardhat: ^2.13.0
+    solhint: ^3.4.1
+    ts-node: ^10.7.0
+    typechain: ^8.1.1
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
 
 "table-layout@npm:^1.0.2":
   version: 1.0.2
