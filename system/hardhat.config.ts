@@ -36,6 +36,8 @@ const config: HardhatUserConfig = {
       },
       chainId: 19850818,
       timeout: 600000,
+      gasMultiplier: 4,
+
     },
     dbcMainnet: {
       url: 'https://rpc.dbcwallet.io',

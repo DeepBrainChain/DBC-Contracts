@@ -10,6 +10,7 @@ build/
 contracts/README.md
 contracts/build/
 contracts/typechain/
+.idea/
 
 .yarn/*
 !.yarn/releases

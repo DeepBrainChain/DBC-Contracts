@@ -10,8 +10,12 @@ async function main() {
 
     const r = await upgrades.upgradeProxy(
         process.env.LOGIC_CONTRACT_PROXY_CONTRACT,
-        contract
-    );
+        contract,
+        {
+            gasLimit: 10000000,
+        }
+
+);
     await r.deployed()
     console.log("contract upgraded address",r.address);
 }

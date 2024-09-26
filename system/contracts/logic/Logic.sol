@@ -58,6 +58,21 @@ contract Logic is IAIProjectRegister,IMachineInfo,IDLCMachineReportStaking,IDLCM
         return abi.decode(returnData, (uint256));
     }
 
+    function getRentingDuration(string memory msgToSign,string memory substrateSig,string memory substratePubKey, string memory machineId, uint256 rentId) external view returns (uint256 duration){
+        (bool success, bytes memory returnData) = machineInfoPrecompile.staticcall(abi.encodeWithSignature(
+            "getRentingDuration(string,string,string,string,uint256)",
+            msgToSign,
+            substrateSig,
+            substratePubKey,
+            machineId,
+            rentId
+        ));
+
+        require(success, string(returnData));
+        return abi.decode(returnData, (uint256));
+    }
+
+
     function machineIsRegistered(string memory machineId,string memory projectName) public view returns (bool){
         (bool success, bytes memory returnData) = projectRegisterPrecompile.staticcall(abi.encodeWithSignature(
             "machineIsRegistered(string,string)",
@@ -132,6 +147,53 @@ contract Logic is IAIProjectRegister,IMachineInfo,IDLCMachineReportStaking,IDLCM
         return abi.decode(returnData, (bool));
     }
 
+    function reportDlcNftStaking(string memory msgToSign,string memory substrateSig,string memory substratePubKey,string memory machineId, uint256 phaseLevel) external returns (bool){
+        (bool success, bytes memory returnData) = dlcMachineReportStakingPrecompile.call(abi.encodeWithSignature(
+            "reportDlcNftStaking(string,string,string,string,uint256)",
+            msgToSign,
+            substrateSig,
+            substratePubKey,
+            machineId,
+            phaseLevel
+        ));
+        require(success, string(returnData));
+        return abi.decode(returnData, (bool));
+    }
+
+    function reportDlcNftEndStaking(string memory msgToSign,string memory substrateSig,string memory substratePubKey,string memory machineId, uint256 phaseLevel) external returns (bool){
+        (bool success, bytes memory returnData) = dlcMachineReportStakingPrecompile.call(abi.encodeWithSignature(
+            "reportDlcNftEndStaking(string,string,string,string,uint256)",
+            msgToSign,
+            substrateSig,
+            substratePubKey,
+            machineId,
+            phaseLevel
+        ));
+        require(success, string(returnData));
+        return abi.decode(returnData, (bool));
+    }
+
+    function getValidRewardDuration(uint256 lastClaimAt, uint256 totalStakeDuration,uint256 phaseLevel) external view returns (uint256 valid_duration){
+        (bool success, bytes memory returnData) = dlcMachineReportStakingPrecompile.staticcall(abi.encodeWithSignature(
+            "getValidRewardDuration(uint256,uint256,uint256)",
+            lastClaimAt,
+            totalStakeDuration,
+            phaseLevel
+        ));
+        require(success, string(returnData));
+        return abi.decode(returnData, (uint256));
+    }
+
+    function getDlcNftStakingRewardStartAt(uint256 phaseLevel) external view returns (uint256){
+        (bool success, bytes memory returnData) = dlcMachineReportStakingPrecompile.staticcall(abi.encodeWithSignature(
+            "getDlcNftStakingRewardStartAt(uint256)",
+            phaseLevel
+        ));
+        require(success, string(returnData));
+        return abi.decode(returnData, (uint256));
+    }
+
+
     function getDlcMachineSlashedAt(string memory machineId) external view returns (uint256){
         (bool success, bytes memory returnData) = dlcMachineSlashInfoPrecompile.staticcall(abi.encodeWithSignature(
             "getDlcMachineSlashedAt(string)",
@@ -157,5 +219,14 @@ contract Logic is IAIProjectRegister,IMachineInfo,IDLCMachineReportStaking,IDLCM
         ));
         require(success, string(returnData));
         return abi.decode(returnData, (address));
+    }
+
+    function isSlashed(string memory machineId) external view returns (bool slashed){
+        (bool success, bytes memory returnData) = dlcMachineSlashInfoPrecompile.staticcall(abi.encodeWithSignature(
+            "isSlashed(string)",
+            machineId
+        ));
+        require(success, string(returnData));
+        return abi.decode(returnData, (bool));
     }
 }
