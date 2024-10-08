@@ -33,14 +33,12 @@ contract Logic is IAIProjectRegister,IMachineInfo,IDLCMachineReportStaking,IDLCM
         return abi.decode(returnData, (uint256));
     }
 
-    function getRentDuration(string memory msgToSign,string memory substrateSig,string memory substratePubKey,uint256 lastClaimAt, uint256 slashAt,string memory machineId) external view returns (uint256 rentDuration){
+    function getRentDuration(uint256 lastClaimAt, uint256 slashAt, uint256 endAt, string memory machineId) external view returns (uint256 rentDuration){
         (bool success, bytes memory returnData) = machineInfoPrecompile.staticcall(abi.encodeWithSignature(
-            "getRentDuration(string,string,string,uint256,uint256,string)",
-            msgToSign,
-            substrateSig,
-            substratePubKey,
+            "getRentDuration(uint256,uint256,uint256,string)",
             lastClaimAt,
             slashAt,
+            endAt,
             machineId
         ));
         require(success, string(returnData));
@@ -193,6 +191,15 @@ contract Logic is IAIProjectRegister,IMachineInfo,IDLCMachineReportStaking,IDLCM
         return abi.decode(returnData, (uint256));
     }
 
+    function getDlcStakingGPUCount(uint256 phaseLevel) external view returns (uint256,uint256)  {
+        (bool success, bytes memory returnData) = dlcMachineReportStakingPrecompile.staticcall(abi.encodeWithSignature(
+            "getDlcStakingGPUCount(uint256)",
+            phaseLevel
+        ));
+        require(success, string(returnData));
+        return abi.decode(returnData, (uint256,uint256));
+    }
+
 
     function getDlcMachineSlashedAt(string memory machineId) external view returns (uint256){
         (bool success, bytes memory returnData) = dlcMachineSlashInfoPrecompile.staticcall(abi.encodeWithSignature(
@@ -229,4 +236,5 @@ contract Logic is IAIProjectRegister,IMachineInfo,IDLCMachineReportStaking,IDLCM
         require(success, string(returnData));
         return abi.decode(returnData, (bool));
     }
+
 }
