@@ -62,7 +62,29 @@ contract Logic is IAIProjectRegister,IMachineInfo,Initializable,OwnableUpgradeab
 
     function getDLCMachineRentFee(string memory machineId,uint256 rentBlocks,uint256 rentGpuCount) external view returns (uint256){
         (bool success, bytes memory returnData) = machineInfoPrecompile.staticcall(abi.encodeWithSignature(
-            "getDLCMachineRentFee(string,address)",
+            "getDLCMachineRentFee(string,uint256,uint256)",
+            machineId,
+            rentBlocks,
+            rentGpuCount
+        ));
+        require(success, string(returnData));
+        return abi.decode(returnData, (uint256))*1000;
+    }
+
+    function getDBCMachineRentFee(string memory machineId,uint256 rentBlocks,uint256 rentGpuCount) external view returns (uint256){
+        (bool success, bytes memory returnData) = machineInfoPrecompile.staticcall(abi.encodeWithSignature(
+            "getDBCMachineRentFee(string,uint256,uint256)",
+            machineId,
+            rentBlocks,
+            rentGpuCount
+        ));
+        require(success, string(returnData));
+        return abi.decode(returnData, (uint256));
+    }
+
+    function getUSDTMachineRentFee(string memory machineId,uint256 rentBlocks,uint256 rentGpuCount) external view returns (uint256){
+        (bool success, bytes memory returnData) = machineInfoPrecompile.staticcall(abi.encodeWithSignature(
+            "getUSDTMachineRentFee(string,uint256,uint256)",
             machineId,
             rentBlocks,
             rentGpuCount

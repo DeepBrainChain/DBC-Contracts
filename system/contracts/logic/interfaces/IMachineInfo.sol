@@ -7,4 +7,6 @@ interface IMachineInfo {
     function getOwnerRentEndAt(string memory machineId,uint256 rentId) external view returns (uint256);
     function isMachineOwner(string memory machineId,address evmAddress) external view returns (bool);
     function getDLCMachineRentFee(string memory machineId,uint256 rentBlocks,uint256 rentGpuCount) external view returns (uint256);
+    function getDBCMachineRentFee(string memory machineId,uint256 rentBlocks,uint256 rentGpuCount) external view returns (uint256);
+    function getUSDTMachineRentFee(string memory machineId,uint256 rentBlocks,uint256 rentGpuCount) external view returns (uint256);
 }
