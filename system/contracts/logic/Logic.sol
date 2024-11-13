@@ -4,12 +4,11 @@ pragma solidity ^0.8.18;
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "./interfaces/IMachineInfo.sol";
-import "./interfaces/IAIProjectRegister.sol";
 
 // Uncomment this line to use console.log
 // import "hardhat/console.sol";
 
-contract Logic is IAIProjectRegister,IMachineInfo,Initializable,OwnableUpgradeable {
+contract Logic is IMachineInfo,Initializable,OwnableUpgradeable {
 
     address private constant projectRegisterPrecompile = address(0x0000000000000000000000000000000000000802);
     address private constant machineInfoPrecompile = address(0x0000000000000000000000000000000000000803);
@@ -92,58 +91,4 @@ contract Logic is IAIProjectRegister,IMachineInfo,Initializable,OwnableUpgradeab
         require(success, string(returnData));
         return abi.decode(returnData, (uint256));
     }
-
-
-    function machineIsRegistered(string memory machineId,string memory projectName) public view returns (bool){
-        (bool success, bytes memory returnData) = projectRegisterPrecompile.staticcall(abi.encodeWithSignature(
-            "machineIsRegistered(string,string)",
-            machineId,
-            projectName
-        ));
-        require(success, string(returnData));
-        return abi.decode(returnData, (bool));
-    }
-
-
-    function addMachineRegisteredProject(string memory msgToSign,string memory substrateSig,string memory substratePubKey,string memory machineId,string memory projectName) external returns(bool) {
-        (bool success, bytes memory returnData) = projectRegisterPrecompile.call(abi.encodeWithSignature(
-            "addMachineRegisteredProject(string,string,string,string,string)",
-            msgToSign,
-            substrateSig,
-            substratePubKey,
-            machineId,
-            projectName
-        ));
-        require(success, string(returnData));
-        return abi.decode(returnData, (bool));
-    }
-
-    function removalMachineRegisteredProject(string memory msgToSign,string memory substrateSig,string memory substratePubKey,string memory machineId,string memory projectName) external returns(bool)  {
-        (bool success, bytes memory returnData) = projectRegisterPrecompile.call(abi.encodeWithSignature(
-            "removeMachineRegisteredProject(string,string,string,string,string)",
-            msgToSign,
-            substrateSig,
-            substratePubKey,
-            machineId,
-            projectName
-        ));
-        require(success, string(returnData));
-        return abi.decode(returnData, (bool));
-    }
-
-    function isRegisteredMachineOwner(string memory msgToSign,string memory substrateSig,string memory substratePubKey,string memory machineId,string memory projectName) external view returns (bool){
-        (bool success, bytes memory returnData) = projectRegisterPrecompile.staticcall(abi.encodeWithSignature(
-            "isRegisteredMachineOwner(string,string,string,string,string)",
-            msgToSign,
-            substrateSig,
-            substratePubKey,
-            machineId,
-            projectName
-        ));
-        require(success, string(returnData));
-        return abi.decode(returnData, (bool));
-    }
-
-
-
 }
