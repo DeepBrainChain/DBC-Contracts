@@ -29,13 +29,13 @@ contract Logic is IAIProjectRegister,IMachineInfo,Initializable,OwnableUpgradeab
         return abi.decode(returnData, (uint256));
     }
 
-    function getMachineGPUCount(string memory machineId) external view returns (uint256){
+    function getMachineGPUCount(string memory machineId) external view returns (uint8){
         (bool success, bytes memory returnData) = machineInfoPrecompile.staticcall(abi.encodeWithSignature(
             "getMachineGPUCount(string)",
             machineId
         ));
         require(success, string(returnData));
-        return abi.decode(returnData, (uint256));
+        return abi.decode(returnData, (uint8));
     }
 
     // get machine rent end block number by owner

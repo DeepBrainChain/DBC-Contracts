@@ -15,7 +15,7 @@ async function main() {
             gasLimit: 10000000,
         }
 
-);
+    );
     await r.deployed()
     console.log("contract upgraded address",r.address);
 }
