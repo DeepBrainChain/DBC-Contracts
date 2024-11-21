@@ -46,12 +46,24 @@ const config: HardhatUserConfig = {
       },
       chainId: 19880818,
       timeout: 600000,
+    },
+    bscTestnet :{
+      url: process.env.BSC_TESTNET_RPC_URL,
+      chainId: 97,
+      accounts: [process.env.BSC_PRIVATE_KEY],
+    },
+    bsc: {
+      url: process.env.BSC_RPC_URL,
+      accounts: [process.env.BSC_PRIVATE_KEY],
+      chainId: 56,
     }
   },
   etherscan: {
     apiKey: {
       dbcTestnet: 'no-api-key-needed',
       dbcMainnet: 'no-api-key-needed',
+      bscTestnet: process.env.BSC_TESTNET_API_KEY,
+      bsc: process.env.BSC_API_KEY
     },
     customChains: [
       {
