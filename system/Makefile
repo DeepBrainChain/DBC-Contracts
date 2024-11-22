@@ -37,7 +37,14 @@ upgrade-batch-transfer-bsc-testnet:
 verify-batch-transfer-bsc-testnet:
 	source .env && npx hardhat verify --network bscTestnet $BATCH_TRANSFER_PROXY_CONTRACT
 
+deploy-batch-transfer-bsc:
+	npx hardhat run scripts/deploy-batch-transfer.ts --network bsc
 
+upgrade-batch-transfer-bsc:
+	npx hardhat run scripts/upgrade-batch-transfer.ts --network bsc
+
+verify-batch-transfer-bsc:
+	source .env && npx hardhat verify --network bsc $BATCH_TRANSFER_PROXY_CONTRACT
 
 
 
