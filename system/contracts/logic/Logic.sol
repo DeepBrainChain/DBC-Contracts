@@ -28,6 +28,15 @@ contract Logic is IMachineInfo,Initializable,OwnableUpgradeable {
         return abi.decode(returnData, (uint256));
     }
 
+    function getMachineCPURate(string memory machineId) public view returns (uint256){
+        (bool success, bytes memory returnData) = machineInfoPrecompile.staticcall(abi.encodeWithSignature(
+            "getMachineCPURate(string)",
+            machineId
+        ));
+        require(success, string(returnData));
+        return abi.decode(returnData, (uint256));
+    }
+
     function getMachineGPUCount(string memory machineId) external view returns (uint8){
         (bool success, bytes memory returnData) = machineInfoPrecompile.staticcall(abi.encodeWithSignature(
             "getMachineGPUCount(string)",
