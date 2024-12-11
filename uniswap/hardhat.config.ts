@@ -59,16 +59,16 @@ const config: HardhatUserConfig = {
         network: "dbcTestnet",
         chainId: 19850818,
         urls: {
-          apiURL: "https://blockscout-testnet.dbcscan.io/api",
-          browserURL: "https://blockscout-testnet.dbcscan.io",
+          apiURL: "https://testnet.dbcscan.io/api",
+          browserURL: "https://testnet.dbcscan.io",
         },
       },
       {
         network: "dbcMainnet",
         chainId: 19880818,
         urls: {
-          apiURL: "https://blockscout.dbcscan.io/api",
-          browserURL: "https://blockscout.dbcscan.io",
+          apiURL: "https://www.dbcscan.io/api",
+          browserURL: "https://www.dbcscan.io",
         },
       },
     ],
