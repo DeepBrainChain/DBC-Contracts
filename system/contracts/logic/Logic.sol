@@ -4,19 +4,27 @@ pragma solidity ^0.8.18;
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "./interfaces/IMachineInfo.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+
 
 // Uncomment this line to use console.log
 // import "hardhat/console.sol";
 
-contract Logic is IMachineInfo,Initializable,OwnableUpgradeable {
+contract Logic is IMachineInfo,Initializable,UUPSUpgradeable,OwnableUpgradeable {
 
-    address private constant projectRegisterPrecompile = address(0x0000000000000000000000000000000000000802);
     address private constant machineInfoPrecompile = address(0x0000000000000000000000000000000000000803);
 
-
     function initialize() public initializer {
+        __UUPSUpgradeable_init();
         __Ownable_init();
     }
+
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
+
+    function _authorizeUpgrade(address newImplementation) internal override onlyOwner  {}
 
 
     function getMachineCalcPoint(string memory machineId) public view returns (uint256){
@@ -99,5 +107,9 @@ contract Logic is IMachineInfo,Initializable,OwnableUpgradeable {
         ));
         require(success, string(returnData));
         return abi.decode(returnData, (uint256));
+    }
+
+    function version() external pure returns (uint256){
+        return 1;
     }
 }
