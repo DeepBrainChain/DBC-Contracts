@@ -14,9 +14,13 @@ contract Logic is IMachineInfo,Initializable,UUPSUpgradeable,OwnableUpgradeable 
 
     address private constant machineInfoPrecompile = address(0x0000000000000000000000000000000000000803);
 
+    address public canUpgradeAddress;
+    event AuthorizedUpgrade(address indexed _canUpgradeAddress);
+
     function initialize() public initializer {
         __UUPSUpgradeable_init();
         __Ownable_init();
+        canUpgradeAddress = msg.sender;
     }
 
     /// @custom:oz-upgrades-unsafe-allow constructor
@@ -24,8 +28,20 @@ contract Logic is IMachineInfo,Initializable,UUPSUpgradeable,OwnableUpgradeable 
         _disableInitializers();
     }
 
-    function _authorizeUpgrade(address newImplementation) internal override onlyOwner  {}
+    function _authorizeUpgrade(address newImplementation) internal override  {
+        require(msg.sender == canUpgradeAddress, "Only authorized address can upgrade");
+        canUpgradeAddress = address(0);
+    }
 
+    function requestSetUpgradePermission(address _canUpgradeAddress) external pure returns (bytes memory) {
+        bytes memory data = abi.encodeWithSignature("setUpgradePermission(address)",_canUpgradeAddress);
+        return data;
+    }
+
+    function setUpgradePermission(address _canUpgradeAddress) external onlyOwner {
+        canUpgradeAddress = _canUpgradeAddress;
+        emit AuthorizedUpgrade(_canUpgradeAddress);
+    }
 
     function getMachineCalcPoint(string memory machineId) public view returns (uint256){
         (bool success, bytes memory returnData) = machineInfoPrecompile.staticcall(abi.encodeWithSignature(
