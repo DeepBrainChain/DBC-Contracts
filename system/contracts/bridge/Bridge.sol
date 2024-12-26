@@ -10,9 +10,10 @@ contract Bridge is IBridge {
     function transfer(string memory to, uint256 amount) public virtual returns (bool) {
         require(bytes(to).length == 66, "The address is invalid. This address only supports public keys, and the length in hexadecimal is 66");
 
-        (bool success, bytes memory returnData) = precompile.delegatecall(
+        (bool success, bytes memory returnData) = precompile.call(
             abi.encodeWithSignature(
-                "transfer(string,uint256)",
+                "transfer(address,string,uint256)",
+                msg.sender,
                 to,
                 amount
             )
