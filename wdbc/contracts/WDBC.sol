@@ -19,7 +19,7 @@
 
 pragma solidity ^0.4.18;
 
-contract WETH {
+contract WDBC {
     string public name     = "Wrapped DBC";
     string public symbol   = "WDBC";
     uint8  public decimals = 18;

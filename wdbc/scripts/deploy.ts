@@ -4,10 +4,10 @@ async function main() {
   const [deployer] = await ethers.getSigners();
   console.log(`account: ${deployer.address}`);
 
-  const weth = await ethers.getContractFactory("WETH", deployer);
+  const weth = await ethers.getContractFactory("WDBC", deployer);
   const res = await weth.deploy();
 
-  console.log('weth address: ' + res.address);
+  console.log('WDBC address: ' + res.address);
 }
 
 main().catch((error) => {
