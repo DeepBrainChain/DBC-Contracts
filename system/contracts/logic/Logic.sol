@@ -39,6 +39,7 @@ contract Logic is IMachineInfo,Initializable,UUPSUpgradeable,OwnableUpgradeable 
     }
 
     function setUpgradePermission(address _canUpgradeAddress) external onlyOwner {
+        require(_canUpgradeAddress!= address(0), "Invalid address");
         canUpgradeAddress = _canUpgradeAddress;
         emit AuthorizedUpgrade(_canUpgradeAddress);
     }
