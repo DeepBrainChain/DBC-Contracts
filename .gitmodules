@@ -1,0 +1,15 @@
+[submodule "uniswap/v3-core"]
+	path = uniswap/v3-core
+	url = https://github.com/Uniswap/v3-core
+[submodule "uniswap/v3-periphery"]
+	path = uniswap/v3-periphery
+	url = https://github.com/Uniswap/v3-periphery.git
+[submodule "uniswap/universal-router"]
+	path = uniswap/universal-router
+	url = https://github.com/Uniswap/universal-router.git
+[submodule "uniswap/permit2"]
+	path = uniswap/permit2
+	url = https://github.com/Uniswap/permit2
+[submodule "uniswap/deploy-v3"]
+	path = uniswap/deploy-v3
+	url = https://github.com/Uniswap/deploy-v3.git
