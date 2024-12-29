@@ -29,7 +29,7 @@ const config: HardhatUserConfig = {
       },
       chainId: 19850818
     },
-    dbcTestnet: {
+    'dbc-testnet': {
       url: 'https://rpc-testnet.dbcwallet.io',
       accounts: {
         mnemonic: process.env.MNEMONIC || '',
@@ -39,7 +39,7 @@ const config: HardhatUserConfig = {
       gasMultiplier: 4,
 
     },
-    dbcMainnet: {
+    'dbc-mainnet': {
       url: 'https://rpc.dbcwallet.io',
       accounts: {
         mnemonic: process.env.MNEMONIC || '',
@@ -47,7 +47,7 @@ const config: HardhatUserConfig = {
       chainId: 19880818,
       timeout: 600000,
     },
-    bscTestnet :{
+    'bsc-testnet':{
       url: process.env.BSC_TESTNET_RPC_URL,
       chainId: 97,
       accounts: [process.env.BSC_PRIVATE_KEY],
@@ -60,14 +60,12 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: {
-      dbcTestnet: 'no-api-key-needed',
-      dbcMainnet: 'no-api-key-needed',
-      bscTestnet: process.env.BSC_TESTNET_API_KEY,
-      bsc: process.env.BSC_API_KEY
+      'dbc-testnet': 'no-api-key-needed',
+      'dbc-mainnet': 'no-api-key-needed',
     },
     customChains: [
       {
-        network: "dbcTestnet",
+        network: "dbc-testnet",
         chainId: 19850818,
         urls: {
           apiURL: "https://testnet.dbcscan.io/api",
@@ -75,7 +73,7 @@ const config: HardhatUserConfig = {
         },
       },
       {
-        network: "dbcMainnet",
+        network: "dbc-mainnet",
         chainId: 19880818,
         urls: {
           apiURL: "https://www.dbcscan.io/api",
