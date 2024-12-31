@@ -46,6 +46,26 @@ upgrade-batch-transfer-bsc:
 verify-batch-transfer-bsc:
 	source .env && npx hardhat verify --network bsc $BATCH_TRANSFER_PROXY_CONTRACT
 
+deploy_multisig-dbc-testnet:
+	source .env && npx hardhat run scripts/deploy_multisig.ts --network dbc-testnet
+
+verify_deploy_multisig-dbc-testnet:
+	source .env && npx hardhat verify --network dbc-testnet $MULTI_SGIN_TIME_LOCK_CONTRACT
+
+upgrade_deploy_multisig-dbc-testnet:
+	npx hardhat run scripts/upgrade_multisig.ts --network dbc-testnet
+
+
+deploy_multi_sign_time_lock-dbc-mainnet:
+	source .env && npx hardhat run scripts/deploy_multisig.ts --network dbc-mainnet
+
+verify_multi_sign_time_lock-dbc-mainnet:
+	source .env && npx hardhat verify --network dbc-mainnet $MULTI_SGIN_TIME_LOCK_CONTRACT
+
+upgrade_multi_sign_time_lock-dbc-mainnet:
+	npx hardhat run scripts/upgrade_multisig.ts --network dbc-mainnet
+
+
 
 
 
