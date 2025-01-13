@@ -8,3 +8,4 @@
 * [AI Project Interfaces (Chinese Version)](https://github.com/DeepBrainChain/DBC-Contracts/blob/main/system/contracts/ai/docs/dev_for_ai_project_staking_zh.md)
 * [AI Project Interfaces (English Version)](https://github.com/DeepBrainChain/DBC-Contracts/blob/main/system/contracts/ai/docs/dev_for_ai_project_staking_en.md)
 
+### DBC Testnet Contract Address: 0xb616A0dad9af4cA23234b65D27176be2c09c720c
