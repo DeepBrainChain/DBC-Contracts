@@ -29,6 +29,7 @@ contract Logic is IMachineInfo,Initializable,UUPSUpgradeable,OwnableUpgradeable 
     }
 
     function _authorizeUpgrade(address newImplementation) internal override  {
+        require(newImplementation!= address(0), "Invalid address");
         require(msg.sender == canUpgradeAddress, "Only authorized address can upgrade");
         canUpgradeAddress = address(0);
     }
@@ -125,6 +126,18 @@ contract Logic is IMachineInfo,Initializable,UUPSUpgradeable,OwnableUpgradeable 
         require(success, string(returnData));
         return abi.decode(returnData, (uint256));
     }
+
+   function getDLCRentFeeByCalcPoint(uint256 calcPoint,uint256 rentBlocks,uint256 rentGpuCount,uint256 totalGpuCount) external view returns (uint256){
+       (bool success, bytes memory returnData) = machineInfoPrecompile.staticcall(abi.encodeWithSignature(
+           "getDLCRentFeeByCalcPoint(uint256,uint256,uint256,uint256)",
+           calcPoint,
+           rentBlocks,
+           rentGpuCount,
+           totalGpuCount
+       ));
+       require(success, string(returnData));
+       return abi.decode(returnData, (uint256))*1000;
+   }
 
     function version() external pure returns (uint256){
         return 1;

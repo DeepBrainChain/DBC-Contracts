@@ -1,0 +1,164 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
+
+import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import {UUPSUpgradeable} from "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+import "./interfaces/AIStakingContract.sol";
+import "./interfaces/DBCStaking.sol";
+
+contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
+
+    DBCStakingContract public dbcContract;
+    mapping(address => bool) public authorizedReporters;
+
+    address public canUpgradeAddress;
+
+    mapping(string => mapping(StakingType => address)) public projectName2StakingContractAddress;
+
+    enum StakingType {
+       ShortTerm,
+       LongTerm,
+       Free
+    }
+
+    enum NotifyType {
+        ContractRegister,
+        MachineRegister,
+        MachineUnregister,
+        MachineOnline,
+        MachineOffline
+    }
+
+    struct MachineState {
+        bool isOnline;
+        bool isRegistered;
+        uint256 updateAtTimestamp;
+    }
+
+    // machineId-projectName-stakingType => MachineState
+    mapping (string => MachineState) public machineInProject2States;
+
+    event AuthorizedUpgrade(address indexed canUpgradeAddress);
+    event AddAuthorizedReporter(address indexed reporter);
+    event RemoveAuthorizedReporter(address indexed reporter);
+    event ContractRegister(address indexed caller, string projectName, address indexed stakingContractAddress);
+    event MachineStateUpdate(string machineId, string projectName, StakingType stakingType, NotifyType tp);
+    event NotifiedTargetContract(address indexed targetContractAddress, NotifyType tp, string machineId, bool result);
+    event DBCContractChanged(address indexed dbcContractAddr);
+
+    /// @notice Initialize the contract, only callable once
+    function initialize(address dbcContractAddr, address[] calldata _authorizedReporters) public initializer {
+        __Ownable_init();
+        __UUPSUpgradeable_init();
+
+        dbcContract = DBCStakingContract(dbcContractAddr);
+        for (uint i = 0; i < _authorizedReporters.length; i++) {
+            require(_authorizedReporters[i]!= address(0), "Invalid address");
+            authorizedReporters[_authorizedReporters[i]] = true;
+        }
+    }
+
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
+
+    modifier onlyAuthorizedReporters() {
+        require(authorizedReporters[msg.sender], "Only authorized reporters can call this function");
+        _;
+    }
+
+    function _authorizeUpgrade(address newImplementation) internal override  {
+        require(newImplementation!= address(0), "Invalid address");
+        require(msg.sender == canUpgradeAddress, "Only authorized address can upgrade");
+        canUpgradeAddress = address(0);
+    }
+
+    function requestSetUpgradePermission(address _canUpgradeAddress) external pure returns (bytes memory) {
+        bytes memory data = abi.encodeWithSignature("setUpgradePermission(address)",_canUpgradeAddress);
+        return data;
+    }
+
+    function setUpgradePermission(address _canUpgradeAddress) external onlyOwner {
+        require(_canUpgradeAddress!= address(0), "Invalid address");
+        canUpgradeAddress = _canUpgradeAddress;
+        emit AuthorizedUpgrade(_canUpgradeAddress);
+    }
+
+    function addAuthorizedReporter(address reporter) external onlyOwner{
+        require(reporter!= address(0), "Invalid address");
+        require(!authorizedReporters[reporter], "Reporter already authorized");
+        authorizedReporters[reporter] = true;
+        emit AddAuthorizedReporter(reporter);
+    }
+
+    function removeAuthorizedReporter(address reporter) external onlyOwner {
+        require(reporter!= address(0), "Invalid address");
+        require(authorizedReporters[reporter], "Reporter not authorized");
+        authorizedReporters[reporter] = false;
+        emit RemoveAuthorizedReporter(reporter);
+    }
+
+    function setDBCContract(address dbcContractAddr) external onlyOwner {
+        dbcContract = DBCStakingContract(dbcContractAddr);
+        emit DBCContractChanged(dbcContractAddr);
+    }
+
+    function registerProjectStakingContract(string calldata projectName, StakingType stakingType, address stakingContractAddress) external {
+        require(stakingContractAddress != address(0), "Invalid staking contract address");
+        require(projectName2StakingContractAddress[projectName][stakingType]==address(0), "Project already registered");
+        require(AIStakingContract(stakingContractAddress).notify(NotifyType.ContractRegister,""));
+        projectName2StakingContractAddress[projectName][stakingType] = stakingContractAddress;
+        emit ContractRegister(msg.sender, projectName, stakingContractAddress);
+    }
+
+    function report(NotifyType tp, string calldata projectName, StakingType stakingType, string calldata machineId) external onlyAuthorizedReporters {
+        require(tp == NotifyType.MachineRegister || tp == NotifyType.MachineUnregister || tp == NotifyType.MachineOnline || tp == NotifyType.MachineOffline, "Invalid notify type");
+        address targetContractAddress = projectName2StakingContractAddress[projectName][stakingType];
+        require(targetContractAddress != address(0), "Staking contract not registered");
+
+        string memory key = getKeyOfMachineInProject(machineId, projectName, stakingType);
+        if (tp == NotifyType.MachineRegister){
+            machineInProject2States[key].isRegistered = true;
+        }else if (tp == NotifyType.MachineUnregister){
+            machineInProject2States[key].isRegistered = false;
+        }else if (tp == NotifyType.MachineOnline){
+            machineInProject2States[key].isOnline = true;
+        }else if (tp == NotifyType.MachineOffline){
+            machineInProject2States[key].isOnline = false;
+        }
+
+        emit MachineStateUpdate(machineId, projectName, stakingType, tp);
+
+        AIStakingContract targetContract = AIStakingContract(targetContractAddress);
+        bool result = targetContract.notify(tp, machineId);
+        emit NotifiedTargetContract(targetContractAddress,tp, machineId,result);
+    }
+
+    function getMachineState(string calldata machineId, string calldata projectName, StakingType stakingType) external view returns (bool isOnline, bool isRegistered) {
+        string memory key = getKeyOfMachineInProject(machineId, projectName, stakingType);
+        return (machineInProject2States[key].isOnline, machineInProject2States[key].isRegistered);
+    }
+
+    function getMachineInfo(string calldata machineId) external view returns (address machineOwner,uint256 calcPoint,uint256 cpuRate,string memory gpuType, uint256 gpuMem,string memory cpuType, uint256 gpuCount){
+        return dbcContract.getMachineInfo(machineId);
+    }
+
+    function getKeyOfMachineInProject(string calldata machineId, string calldata projectName, StakingType stakingType) internal pure returns(string memory) {
+        return string(abi.encodePacked(machineId, "-",projectName,"-", StakingTypeEnumToString(stakingType)));
+
+    }
+
+    function StakingTypeEnumToString(StakingType stakingType) internal pure returns(string memory) {
+            if (stakingType == StakingType.ShortTerm) {
+                return "ShortTerm";
+            } else if (stakingType == StakingType.LongTerm) {
+                return "LongTerm";
+            } else if (stakingType == StakingType.Free) {
+                return "Free";
+            } else {
+                return "Unknown";
+            }
+    }
+}
