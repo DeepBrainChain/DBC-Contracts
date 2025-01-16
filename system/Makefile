@@ -72,7 +72,7 @@ verify_ai-dbc-testnet:
 	source .env && npx hardhat verify --network dbc-testnet $AI_PROXY_CONTRACT
 
 upgrade_ai-dbc-testnet:
-	npx hardhat run scripts/upgrade_ai.ts --network dbc-testnet
+	npx hardhat run scripts/upgrade-ai.ts --network dbc-testnet
 
 
 

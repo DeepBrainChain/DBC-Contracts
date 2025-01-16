@@ -46,8 +46,9 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     event MachineStateUpdate(string machineId, string projectName, StakingType stakingType, NotifyType tp);
     event NotifiedTargetContract(address indexed targetContractAddress, NotifyType tp, string machineId, bool result);
     event DBCContractChanged(address indexed dbcContractAddr);
+    event ReportFailed(NotifyType tp, string projectName, StakingType stakingType, string machineId, string reason);
 
-    /// @notice Initialize the contract, only callable once
+/// @notice Initialize the contract, only callable once
     function initialize(address dbcContractAddr, address[] calldata _authorizedReporters) public initializer {
         __Ownable_init();
         __UUPSUpgradeable_init();
@@ -69,10 +70,9 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         _;
     }
 
-    function _authorizeUpgrade(address newImplementation) internal override  {
+    function _authorizeUpgrade(address newImplementation) internal view override  {
         require(newImplementation!= address(0), "Invalid address");
         require(msg.sender == canUpgradeAddress, "Only authorized address can upgrade");
-        canUpgradeAddress = address(0);
     }
 
     function requestSetUpgradePermission(address _canUpgradeAddress) external pure returns (bytes memory) {
@@ -116,7 +116,10 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     function report(NotifyType tp, string calldata projectName, StakingType stakingType, string calldata machineId) external onlyAuthorizedReporters {
         require(tp == NotifyType.MachineRegister || tp == NotifyType.MachineUnregister || tp == NotifyType.MachineOnline || tp == NotifyType.MachineOffline, "Invalid notify type");
         address targetContractAddress = projectName2StakingContractAddress[projectName][stakingType];
-        require(targetContractAddress != address(0), "Staking contract not registered");
+        if (targetContractAddress == address(0)){
+            emit ReportFailed(tp, projectName, stakingType, machineId, "Project not registered");
+            return;
+        }
 
         string memory key = getKeyOfMachineInProject(machineId, projectName, stakingType);
         if (tp == NotifyType.MachineRegister){
@@ -141,8 +144,8 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         return (machineInProject2States[key].isOnline, machineInProject2States[key].isRegistered);
     }
 
-    function getMachineInfo(string calldata machineId) external view returns (address machineOwner,uint256 calcPoint,uint256 cpuRate,string memory gpuType, uint256 gpuMem,string memory cpuType, uint256 gpuCount){
-        return dbcContract.getMachineInfo(machineId);
+    function getMachineInfo(string calldata id, bool isDeepLink) external view returns (address machineOwner,uint256 calcPoint,uint256 cpuRate,string memory gpuType, uint256 gpuMem,string memory cpuType, uint256 gpuCount, string memory machineId){
+        return dbcContract.getMachineInfo(id, isDeepLink);
     }
 
     function getKeyOfMachineInProject(string calldata machineId, string calldata projectName, StakingType stakingType) internal pure returns(string memory) {

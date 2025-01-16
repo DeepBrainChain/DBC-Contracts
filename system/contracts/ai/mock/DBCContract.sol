@@ -11,6 +11,7 @@ struct MachineInfo {
         uint256 gpuMem;
         string cpuType;
         uint256 gpuCount;
+        string machineId;
 }
 
 contract DBCStakingContractMock is DBCStakingContract {
@@ -24,20 +25,23 @@ contract DBCStakingContractMock is DBCStakingContract {
                         gpuType: "NVIDIA",  // gpuType
                         gpuMem: 16,       // gpuMem
                         cpuType: "Intel",  // cpuType
-                        gpuCount: 1  // gpuCount
+                        gpuCount: 1, // gpuCount
+                        machineId: "machine1"
                 });
         }
 
-        function getMachineInfo(string calldata machineId) external view override returns (
+        function getMachineInfo(string calldata id,bool _isDeepLink) external view override returns (
                 address machineOwner,
                 uint256 calcPoint,
                 uint256 cpuRate,
                 string memory gpuType,
                 uint256 gpuMem,
                 string memory cpuType,
-                uint256 gpuCount
+                uint256 gpuCount,
+                string memory machineId
         ) {
-                MachineInfo storage machine = machineInfoStore[machineId];
+                _isDeepLink = true;
+                MachineInfo storage machine = machineInfoStore[id];
 
                 machineOwner = machine.machineOwner;
                 calcPoint = machine.calcPoint;
@@ -46,5 +50,6 @@ contract DBCStakingContractMock is DBCStakingContract {
                 gpuMem = machine.gpuMem;
                 cpuType = machine.cpuType;
                 gpuCount = machine.gpuCount;
+                machineId = machine.machineId;
         }
 }

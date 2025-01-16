@@ -3,7 +3,7 @@
 ### AIStakingContract
 ```solidity
     interface AIStakingContract {
-        function notify(NotifyType tp, string calldata machineId) external returns (bool);
+        function notify(NotifyType tp, string calldata id) external returns (bool);
     }
 ```
 
@@ -39,19 +39,19 @@ enum NotifyType {
 ```solidity
 function registerProjectStakingContract(string calldata projectName, StakingType stakingType, address stakingContractAddress) external;
 ```
-**Description:** Registers a staking contract for a project. the staking contract which wants to register should implement the `AIStakingContract` interface to get notified when a machine state changes(online/offline/registered/unregistered).
+**Description:** Registers a staking contract for a project. the staking contract which wants to register should implement the `AIStakingContract` interface(The id can be the machine id or the container id, which is consistent with the resource unit used during registration) to get notified when a machine state changes(online/offline/registered/unregistered).
 
 
 #### `getMachineState`
 ```solidity
 function getMachineState(string calldata machineId, string calldata projectName, StakingType stakingType) external view returns (bool isOnline, bool isRegistered);
 ```
-**Description:** Retrieves the state of a machine.
+**Description:** Get the status of the specified machine. The id can be the machine id or the container id, which is consistent with the resource unit used during registration.
 
 #### `getMachineInfo`
 ```solidity
 function getMachineInfo(string calldata machineId) external view returns (address machineOwner, uint256 calcPoint, uint256 cpuRate, string memory gpuType, uint256 gpuMem, string memory cpuType, uint256 gpuCount);
 ```
-**Description:** Retrieves detailed information about a machine.
+**Description:** Get detailed information about the specified machine. The id can be a machine id or a container id, which is consistent with the resource unit used during registration.
 
 ---

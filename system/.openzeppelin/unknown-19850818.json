@@ -3964,7 +3964,7 @@
             "label": "dbcContract",
             "offset": 0,
             "slot": "201",
-            "type": "t_contract(DBCStakingContract)2031",
+            "type": "t_contract(DBCStakingContract)1991",
             "contract": "AI",
             "src": "contracts/ai/AI.sol:12"
           },
@@ -4018,7 +4018,779 @@
             "label": "bool",
             "numberOfBytes": "1"
           },
-          "t_contract(DBCStakingContract)2031": {
+          "t_contract(DBCStakingContract)1991": {
+            "label": "contract DBCStakingContract",
+            "numberOfBytes": "20"
+          },
+          "t_enum(StakingType)1319": {
+            "label": "enum AI.StakingType",
+            "members": [
+              "ShortTerm",
+              "LongTerm",
+              "Free"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_enum(StakingType)1319,t_address)": {
+            "label": "mapping(enum AI.StakingType => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_mapping(t_enum(StakingType)1319,t_address))": {
+            "label": "mapping(string => mapping(enum AI.StakingType => address))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_struct(MachineState)1332_storage)": {
+            "label": "mapping(string => struct AI.MachineState)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(MachineState)1332_storage": {
+            "label": "struct AI.MachineState",
+            "members": [
+              {
+                "label": "isOnline",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "isRegistered",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "0"
+              },
+              {
+                "label": "updateAtTimestamp",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_string_storage": {
+            "label": "string"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "1e9d9bd63921a94b7c7842c075f9d766d6629d530855d8e334b396358d3c3602": {
+      "address": "0x824eB3FC91Bb908d0c41A105d613b334E24b0492",
+      "txHash": "0x5e41e0bee1ae4b09e26afc197e756f84b32eb3964cb20c1c65b07edd17c90c79",
+      "layout": {
+        "solcVersion": "0.8.18",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "dbcContract",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_contract(DBCStakingContract)2012",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:12"
+          },
+          {
+            "label": "authorizedReporters",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:13"
+          },
+          {
+            "label": "canUpgradeAddress",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_address",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:15"
+          },
+          {
+            "label": "projectName2StakingContractAddress",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_mapping(t_string_memory_ptr,t_mapping(t_enum(StakingType)1319,t_address))",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:17"
+          },
+          {
+            "label": "machineInProject2States",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_mapping(t_string_memory_ptr,t_struct(MachineState)1332_storage)",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:40"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(DBCStakingContract)2012": {
+            "label": "contract DBCStakingContract",
+            "numberOfBytes": "20"
+          },
+          "t_enum(StakingType)1319": {
+            "label": "enum AI.StakingType",
+            "members": [
+              "ShortTerm",
+              "LongTerm",
+              "Free"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_enum(StakingType)1319,t_address)": {
+            "label": "mapping(enum AI.StakingType => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_mapping(t_enum(StakingType)1319,t_address))": {
+            "label": "mapping(string => mapping(enum AI.StakingType => address))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_struct(MachineState)1332_storage)": {
+            "label": "mapping(string => struct AI.MachineState)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(MachineState)1332_storage": {
+            "label": "struct AI.MachineState",
+            "members": [
+              {
+                "label": "isOnline",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "isRegistered",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "0"
+              },
+              {
+                "label": "updateAtTimestamp",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_string_storage": {
+            "label": "string"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "17f4c6b97847e50d6cfa7c57dbe276bbfb6b5e2667ecd85056c2f1e2377d07de": {
+      "address": "0xdb291945bDd450f8A00951F5DAaDbb520B82FcaC",
+      "txHash": "0xd4a152d0a9602e1c521b736a21bf1657fd3a24f050a025011a6ece7700888a37",
+      "layout": {
+        "solcVersion": "0.8.18",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "dbcContract",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_contract(DBCStakingContract)2016",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:12"
+          },
+          {
+            "label": "authorizedReporters",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:13"
+          },
+          {
+            "label": "canUpgradeAddress",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_address",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:15"
+          },
+          {
+            "label": "projectName2StakingContractAddress",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_mapping(t_string_memory_ptr,t_mapping(t_enum(StakingType)1319,t_address))",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:17"
+          },
+          {
+            "label": "machineInProject2States",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_mapping(t_string_memory_ptr,t_struct(MachineState)1332_storage)",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:40"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(DBCStakingContract)2016": {
+            "label": "contract DBCStakingContract",
+            "numberOfBytes": "20"
+          },
+          "t_enum(StakingType)1319": {
+            "label": "enum AI.StakingType",
+            "members": [
+              "ShortTerm",
+              "LongTerm",
+              "Free"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_enum(StakingType)1319,t_address)": {
+            "label": "mapping(enum AI.StakingType => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_mapping(t_enum(StakingType)1319,t_address))": {
+            "label": "mapping(string => mapping(enum AI.StakingType => address))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_struct(MachineState)1332_storage)": {
+            "label": "mapping(string => struct AI.MachineState)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(MachineState)1332_storage": {
+            "label": "struct AI.MachineState",
+            "members": [
+              {
+                "label": "isOnline",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "isRegistered",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "0"
+              },
+              {
+                "label": "updateAtTimestamp",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_string_storage": {
+            "label": "string"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "c386ce030a098a3e43467a1dc6344f7da45b444a037891e930a36dafac657da5": {
+      "address": "0x17ad5cAD3b267b782Bb0455cC4Be4bBBc18A43E7",
+      "txHash": "0xe9f6b2ddf682f2796ccfed84146590b7b5eb357f5a4cfeb8ede175ef6f5d7e70",
+      "layout": {
+        "solcVersion": "0.8.18",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "dbcContract",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_contract(DBCStakingContract)2009",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:12"
+          },
+          {
+            "label": "authorizedReporters",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:13"
+          },
+          {
+            "label": "canUpgradeAddress",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_address",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:15"
+          },
+          {
+            "label": "projectName2StakingContractAddress",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_mapping(t_string_memory_ptr,t_mapping(t_enum(StakingType)1319,t_address))",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:17"
+          },
+          {
+            "label": "machineInProject2States",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_mapping(t_string_memory_ptr,t_struct(MachineState)1332_storage)",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:40"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(DBCStakingContract)2009": {
+            "label": "contract DBCStakingContract",
+            "numberOfBytes": "20"
+          },
+          "t_enum(StakingType)1319": {
+            "label": "enum AI.StakingType",
+            "members": [
+              "ShortTerm",
+              "LongTerm",
+              "Free"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_enum(StakingType)1319,t_address)": {
+            "label": "mapping(enum AI.StakingType => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_mapping(t_enum(StakingType)1319,t_address))": {
+            "label": "mapping(string => mapping(enum AI.StakingType => address))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_struct(MachineState)1332_storage)": {
+            "label": "mapping(string => struct AI.MachineState)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(MachineState)1332_storage": {
+            "label": "struct AI.MachineState",
+            "members": [
+              {
+                "label": "isOnline",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "isRegistered",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "0"
+              },
+              {
+                "label": "updateAtTimestamp",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_string_storage": {
+            "label": "string"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "4c2c10770009b401941632628f068827af535c0ba0b95adbdd0ac3e28b8de30a": {
+      "address": "0xe60f59F7C7Ee9D6c62023F6A13d405ceD56F3553",
+      "txHash": "0x99cb2edd1c35cb1f712164c5dae9e0deb1bb7ae688f7974e794e7b258cd58632",
+      "layout": {
+        "solcVersion": "0.8.18",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "dbcContract",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_contract(DBCStakingContract)2014",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:12"
+          },
+          {
+            "label": "authorizedReporters",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:13"
+          },
+          {
+            "label": "canUpgradeAddress",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_address",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:15"
+          },
+          {
+            "label": "projectName2StakingContractAddress",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_mapping(t_string_memory_ptr,t_mapping(t_enum(StakingType)1319,t_address))",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:17"
+          },
+          {
+            "label": "machineInProject2States",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_mapping(t_string_memory_ptr,t_struct(MachineState)1332_storage)",
+            "contract": "AI",
+            "src": "contracts/ai/AI.sol:40"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(DBCStakingContract)2014": {
             "label": "contract DBCStakingContract",
             "numberOfBytes": "20"
           },

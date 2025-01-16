@@ -71,12 +71,6 @@ describe("AI Contract", function () {
             let isAuthorized = await ai.authorizedReporters(addr1.address);
             expect(isAuthorized).to.be.false;
         });
-
-        it("should not allow report staking contract whichi not registered", async function () {
-
-            await expect(ai.connect(addr2).report(1, "Project1", 0, "Machine1"))
-                .to.be.revertedWith("Staking contract not registered'");
-        });
     });
 
     describe("Register Project Staking Contract", function () {
@@ -97,12 +91,6 @@ describe("AI Contract", function () {
             await expect(
                 ai.registerProjectStakingContract("Project1", 0, stakingContractAddress)
             ).to.be.revertedWith("Project already registered");
-        });
-
-        it("should not allow unauthorized reporters to report", async function () {
-
-            await expect(ai.connect(addr2).report(1, "Project1", 0, "Machine1"))
-                .to.be.revertedWith("Staking contract not registered'");
         });
     });
 
