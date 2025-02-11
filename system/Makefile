@@ -46,6 +46,16 @@ upgrade-batch-transfer-bsc:
 verify-batch-transfer-bsc:
 	source .env && npx hardhat verify --network bsc $BATCH_TRANSFER_PROXY_CONTRACT
 
+deploy-batch-transfer-dbc:
+	npx hardhat run scripts/deploy-batch-transfer.ts --network dbc-mainnet
+
+upgrade-batch-transfer-bsc:
+	npx hardhat run scripts/upgrade-batch-transfer.ts --network dbc-mainnet
+
+verify-batch-transfer-bsc:
+	source .env && npx hardhat verify --network dbc-mainnet $BATCH_TRANSFER_PROXY_CONTRACT
+
+
 deploy_multisig-dbc-testnet:
 	source .env && npx hardhat run scripts/deploy_multisig.ts --network dbc-testnet
 

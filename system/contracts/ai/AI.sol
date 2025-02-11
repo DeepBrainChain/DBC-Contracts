@@ -58,6 +58,7 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
             require(_authorizedReporters[i]!= address(0), "Invalid address");
             authorizedReporters[_authorizedReporters[i]] = true;
         }
+        canUpgradeAddress = msg.sender;
     }
 
     /// @custom:oz-upgrades-unsafe-allow constructor
@@ -113,6 +114,10 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         emit ContractRegister(msg.sender, projectName, stakingContractAddress);
     }
 
+    function deleteRegisteredProjectStakingContract(string calldata projectName, StakingType stakingType) external onlyOwner {
+        delete projectName2StakingContractAddress[projectName][stakingType];
+    }
+
     function report(NotifyType tp, string calldata projectName, StakingType stakingType, string calldata machineId) external onlyAuthorizedReporters {
         require(tp == NotifyType.MachineRegister || tp == NotifyType.MachineUnregister || tp == NotifyType.MachineOnline || tp == NotifyType.MachineOffline, "Invalid notify type");
         address targetContractAddress = projectName2StakingContractAddress[projectName][stakingType];
@@ -145,7 +150,8 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     }
 
     function getMachineInfo(string calldata id, bool isDeepLink) external view returns (address machineOwner,uint256 calcPoint,uint256 cpuRate,string memory gpuType, uint256 gpuMem,string memory cpuType, uint256 gpuCount, string memory machineId){
-        return dbcContract.getMachineInfo(id, isDeepLink);
+        (machineOwner,calcPoint,cpuRate,gpuType, gpuMem,cpuType,gpuCount, machineId,,,) =  dbcContract.getMachineInfo(id, isDeepLink);
+        return (machineOwner,calcPoint,cpuRate,gpuType, gpuMem,cpuType,gpuCount, machineId);
     }
 
     function getKeyOfMachineInProject(string calldata machineId, string calldata projectName, StakingType stakingType) internal pure returns(string memory) {
@@ -163,5 +169,11 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
             } else {
                 return "Unknown";
             }
+    }
+
+    function reportStakingStatus(string calldata projectName, StakingType stakingType, uint256 gpuNum, bool isStake) external {
+        address targetContractAddress = projectName2StakingContractAddress[projectName][stakingType];
+        require(msg.sender == targetContractAddress, "Only registered staking contract can call this function")
+        // todo
     }
 }

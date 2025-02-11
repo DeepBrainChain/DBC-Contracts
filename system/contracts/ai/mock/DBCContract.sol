@@ -38,7 +38,9 @@ contract DBCStakingContractMock is DBCStakingContract {
                 uint256 gpuMem,
                 string memory cpuType,
                 uint256 gpuCount,
-                string memory machineId
+                string memory machineId,
+                string memory ignore1,
+                string memory ignore2
         ) {
                 _isDeepLink = true;
                 MachineInfo storage machine = machineInfoStore[id];
@@ -51,5 +53,7 @@ contract DBCStakingContractMock is DBCStakingContract {
                 cpuType = machine.cpuType;
                 gpuCount = machine.gpuCount;
                 machineId = machine.machineId;
+                ignore1 = "";
+                ignore2 = "";
         }
 }
