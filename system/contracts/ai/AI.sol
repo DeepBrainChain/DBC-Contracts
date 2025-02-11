@@ -6,10 +6,12 @@ import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Ini
 import {UUPSUpgradeable} from "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "./interfaces/AIStakingContract.sol";
 import "./interfaces/DBCStaking.sol";
+import "./interfaces/MachineInfo.sol";
 
 contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
 
     DBCStakingContract public dbcContract;
+    MachineInfoContract public machineInfoContract;
     mapping(address => bool) public authorizedReporters;
 
     address public canUpgradeAddress;
@@ -49,10 +51,11 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     event ReportFailed(NotifyType tp, string projectName, StakingType stakingType, string machineId, string reason);
 
 /// @notice Initialize the contract, only callable once
-    function initialize(address dbcContractAddr, address[] calldata _authorizedReporters) public initializer {
+    function initialize(address machineInfoContractAddr, address dbcContractAddr, address[] calldata _authorizedReporters) public initializer {
         __Ownable_init();
         __UUPSUpgradeable_init();
 
+        machineInfoContract = MachineInfoContract(machineInfoContractAddr);
         dbcContract = DBCStakingContract(dbcContractAddr);
         for (uint i = 0; i < _authorizedReporters.length; i++) {
             require(_authorizedReporters[i]!= address(0), "Invalid address");
@@ -150,7 +153,7 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     }
 
     function getMachineInfo(string calldata id, bool isDeepLink) external view returns (address machineOwner,uint256 calcPoint,uint256 cpuRate,string memory gpuType, uint256 gpuMem,string memory cpuType, uint256 gpuCount, string memory machineId){
-        (machineOwner,calcPoint,cpuRate,gpuType, gpuMem,cpuType,gpuCount, machineId,,,) =  dbcContract.getMachineInfo(id, isDeepLink);
+        (machineOwner,calcPoint,cpuRate,gpuType, gpuMem,cpuType,gpuCount, machineId,,,) =  machineInfoContract.getMachineInfo(id, isDeepLink);
         return (machineOwner,calcPoint,cpuRate,gpuType, gpuMem,cpuType,gpuCount, machineId);
     }
 
@@ -171,9 +174,13 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
             }
     }
 
-    function reportStakingStatus(string calldata projectName, StakingType stakingType, uint256 gpuNum, bool isStake) external {
+    function reportStakingStatus(string calldata projectName, StakingType stakingType, string calldata id, uint256 gpuNum, bool isStake) external {
         address targetContractAddress = projectName2StakingContractAddress[projectName][stakingType];
-        require(msg.sender == targetContractAddress, "Only registered staking contract can call this function")
+        require(msg.sender == targetContractAddress, "Only registered staking contract can call this function");
         // todo
+    }
+
+    function freeGpuAmount(string calldata _id) external view returns (uint256){
+        return dbcContract.freeGpuAmount(_id);
     }
 }

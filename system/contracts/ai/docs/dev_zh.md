@@ -181,7 +181,7 @@ function getMachineInfo(string calldata machineId) external view returns (addres
 
 #### `reportStakingStatus`
 ```solidity
-function reportStakingStatus(string calldata projectName, StakingType stakingType, uint256 gpuNum, bool isStake) external
+function reportStakingStatus(string calldata projectName, StakingType stakingType,string calldata id, uint256 gpuNum, bool isStake) external;
 ```
 **描述：** 上报质押状态(质押：isStake=true，取消质押：isStake=false)。
 

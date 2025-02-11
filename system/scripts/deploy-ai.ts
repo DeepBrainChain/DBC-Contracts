@@ -11,7 +11,7 @@ async function main() {
     console.log(`deployer balance: ${await deployer.getBalance()}`);
 
     const contractFactory = await ethers.getContractFactory("AI",deployer);
-    const contract = await upgrades.deployProxy(contractFactory, [process.env.DBC_CONTRACT,[process.env.AUTHORIZED_REPORTER1]],{ initializer: 'initialize' });
+    const contract = await upgrades.deployProxy(contractFactory, [process.env.MACHINE_INFO_CONTRACT, process.env.DBC_CONTRACT,[process.env.AUTHORIZED_REPORTER1]],{ initializer: 'initialize' });
 
     console.log("deployed to:", contract.address);
     // console.log(" getImplementationAddress: ",await upgrades.erc1967.getImplementationAddress(contract.address));

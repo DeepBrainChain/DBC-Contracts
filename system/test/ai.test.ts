@@ -1,12 +1,13 @@
 import { expect } from "chai";
 import { ethers, upgrades } from 'hardhat';
 import { AI } from "../typechain";
-import { AIStakingContractMock, DBCStakingContractMock } from "../typechain";
+import { AIStakingContractMock, MachineInfoContractMock,DBCStakingContractMock } from "../typechain";
 
 describe("AI Contract", function () {
     let ai: AI;
     let aiStakingContractMock: AIStakingContractMock;
-    let dbcContractMock: DBCStakingContractMock;
+    let machineInfoContract: MachineInfoContractMock;
+    let dbcStakingContractMock: DBCStakingContractMock;
     let owner: any;
     let addr1: any;
     let addr2: any;
@@ -20,17 +21,22 @@ describe("AI Contract", function () {
         aiStakingContractMock = await AIStakingContractMockFactory.deploy();
         await aiStakingContractMock.deployed();
 
-        const DBCContractMockFactory = await ethers.getContractFactory("DBCStakingContractMock");
+        const dbcContractFactory = await ethers.getContractFactory("DBCStakingContractMock");
+
+        dbcStakingContractMock = await dbcContractFactory.deploy();
+        await dbcStakingContractMock.deployed();
+
+        const machineInfoContractFactory = await ethers.getContractFactory("MachineInfoContractMock");
+
 
         [owner, addr1, addr2] = await ethers.getSigners();
 
-        dbcContractMock = await DBCContractMockFactory.deploy();
-        await dbcContractMock.deployed();
+        machineInfoContract = await machineInfoContractFactory.deploy();
+        await machineInfoContract.deployed();
 
         try {
-            ai = await upgrades.deployProxy(AIFactory, [dbcContractMock.address, [addr1.address, addr2.address]],{ initializer: 'initialize' });
+            ai = await upgrades.deployProxy(AIFactory, [machineInfoContract.address,dbcStakingContractMock.address, [addr1.address, addr2.address]],{ initializer: 'initialize' });
         } catch (error) {
-            console.log("AI contract already initialized.",await ai.dbcContract().address);
             if (error.message.includes("Initializable: contract is already initialized")) {
                 console.log("AI contract already initialized.");
             } else {
