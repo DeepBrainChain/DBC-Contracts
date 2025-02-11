@@ -37,7 +37,7 @@ enum NotifyType {
 
 #### `registerProjectStakingContract`
 ```solidity
-function registerProjectStakingContract(string calldata projectName, StakingType stakingType, address stakingContractAddress) external;
+    function registerProjectStakingContract(string calldata projectName, StakingType stakingType, address toBeNotifiedMachineStateUpdateContractAddress, address toReportStakingStatusContractAddress) external;
 ```
 **Description:** Registers a staking contract for a project. the staking contract which wants to register should implement the `AIStakingContract` interface(The id can be the machine id or the container id, which is consistent with the resource unit used during registration) to get notified when a machine state changes(online/offline/registered/unregistered).
 

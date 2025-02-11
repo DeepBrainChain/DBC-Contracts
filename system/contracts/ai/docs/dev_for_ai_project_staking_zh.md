@@ -41,9 +41,10 @@ enum NotifyType {
 
 #### `registerProjectStakingContract`
 ```solidity
-function registerProjectStakingContract(string calldata projectName, StakingType stakingType, address stakingContractAddress) external;
+    function registerProjectStakingContract(string calldata projectName, StakingType stakingType, address toBeNotifiedMachineStateUpdateContractAddress, address toReportStakingStatusContractAddress) external;
 ```
-**描述：** 为一个项目注册质押合约。需要注册的质押合约必须实现 `AIStakingContract` 接口(id可以是机器id或者是容器id,与注册时使用的资源单位一致)，以便在机器状态变化（上线/下线/注册/取消注册）时接收通知。
+**描述：** 为一个项目注册质押合约。需要注册的质押合约必须实现 `AIStakingContract` 接口(id可以是机器id或者是容器id,与注册时使用的资源单位一致)，以便在机器状态变化（上线/下线/注册/取消注册）时接收通知，
+由toBeNotifiedMachineStateUpdateContractAddress接收，toReportStakingStatusContractAddress上报质押状态 开始质押/结束质押。
 
 ---
 

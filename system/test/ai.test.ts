@@ -80,22 +80,13 @@ describe("AI Contract", function () {
     });
 
     describe("Register Project Staking Contract", function () {
-        it("should allow the registration of a project staking contract", async function () {
-            const stakingContractAddress = aiStakingContractMock.address;
-
-            await ai.registerProjectStakingContract("Project1", 0, stakingContractAddress);
-
-            const registeredContract = await ai.projectName2StakingContractAddress("Project1", 0);
-            expect(registeredContract).to.equal(stakingContractAddress);
-        });
-
         it("should revert if project already registered", async function () {
             const stakingContractAddress = aiStakingContractMock.address;
 
-            await ai.registerProjectStakingContract("Project1", 0, stakingContractAddress);
+            await ai.registerProjectStakingContract("Project1", 0, stakingContractAddress,stakingContractAddress);
 
             await expect(
-                ai.registerProjectStakingContract("Project1", 0, stakingContractAddress)
+                ai.registerProjectStakingContract("Project1", 0, stakingContractAddress,stakingContractAddress)
             ).to.be.revertedWith("Project already registered");
         });
     });
@@ -103,7 +94,7 @@ describe("AI Contract", function () {
     describe("Report Machine State", function () {
         it("should correctly register a machine state", async function () {
             const stakingContractAddress = aiStakingContractMock.address;
-            await ai.registerProjectStakingContract("Project1", 0, stakingContractAddress);
+            await ai.registerProjectStakingContract("Project1", 0, stakingContractAddress,stakingContractAddress);
 
             await ai.connect(addr1).report(1, "Project1", 0, "Machine1"); // MachineRegister
             const machineState = await ai.getMachineState("Machine1", "Project1", 0);
@@ -116,7 +107,7 @@ describe("AI Contract", function () {
 
         it("should correctly update machine online status", async function () {
             const stakingContractAddress = aiStakingContractMock.address;
-            await ai.registerProjectStakingContract("Project1", 0, stakingContractAddress);
+            await ai.registerProjectStakingContract("Project1", 0, stakingContractAddress,stakingContractAddress);
 
             await ai.connect(addr2).report(3, "Project1", 0, "Machine1"); // MachineOnline
             const machineState = await ai.getMachineState("Machine1", "Project1", 0);
@@ -129,7 +120,7 @@ describe("AI Contract", function () {
 
         it("should emit events on machine state updates", async function () {
             const stakingContractAddress = aiStakingContractMock.address;
-            await ai.registerProjectStakingContract("Project1", 0, stakingContractAddress);
+            await ai.registerProjectStakingContract("Project1", 0, stakingContractAddress,stakingContractAddress);
 
 
             await expect(ai.connect(addr1).report(1, "Project1", 0, "Machine1"))

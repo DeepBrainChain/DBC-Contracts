@@ -16,7 +16,12 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
 
     address public canUpgradeAddress;
 
-    mapping(string => mapping(StakingType => address)) public projectName2StakingContractAddress;
+    struct RegisterInfo {
+        address toBeNotifiedMachineStateUpdateContractAddress;
+        address toReportStakingStatusContractAddress;
+    }
+
+    mapping(string => mapping(StakingType => RegisterInfo)) public projectName2StakingContractAddress;
 
     enum StakingType {
        ShortTerm,
@@ -44,7 +49,7 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     event AuthorizedUpgrade(address indexed canUpgradeAddress);
     event AddAuthorizedReporter(address indexed reporter);
     event RemoveAuthorizedReporter(address indexed reporter);
-    event ContractRegister(address indexed caller, string projectName, address indexed stakingContractAddress);
+    event ContractRegister(address indexed caller, string projectName, address indexed toBeNotifiedMachineStateUpdateContractAddress,address indexed toReportStakingStatusContractAddress);
     event MachineStateUpdate(string machineId, string projectName, StakingType stakingType, NotifyType tp);
     event NotifiedTargetContract(address indexed targetContractAddress, NotifyType tp, string machineId, bool result);
     event DBCContractChanged(address indexed dbcContractAddr);
@@ -109,12 +114,17 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         emit DBCContractChanged(dbcContractAddr);
     }
 
-    function registerProjectStakingContract(string calldata projectName, StakingType stakingType, address stakingContractAddress) external {
-        require(stakingContractAddress != address(0), "Invalid staking contract address");
-        require(projectName2StakingContractAddress[projectName][stakingType]==address(0), "Project already registered");
-        require(AIStakingContract(stakingContractAddress).notify(NotifyType.ContractRegister,""));
-        projectName2StakingContractAddress[projectName][stakingType] = stakingContractAddress;
-        emit ContractRegister(msg.sender, projectName, stakingContractAddress);
+    function registerProjectStakingContract(string calldata projectName, StakingType stakingType, address toBeNotifiedMachineStateUpdateContractAddress, address toReportStakingStatusContractAddress) external {
+        require(toBeNotifiedMachineStateUpdateContractAddress != address(0), "Invalid toBeNotifiedMachineStateUpdateContractAddress");
+        require(toReportStakingStatusContractAddress != address(0), "Invalid toReportStakingStatusContractAddress");
+
+        require(projectName2StakingContractAddress[projectName][stakingType].toBeNotifiedMachineStateUpdateContractAddress == address(0), "Project already registered");
+        require(AIStakingContract(toBeNotifiedMachineStateUpdateContractAddress).notify(NotifyType.ContractRegister,""));
+        projectName2StakingContractAddress[projectName][stakingType] = RegisterInfo({
+            toBeNotifiedMachineStateUpdateContractAddress: toBeNotifiedMachineStateUpdateContractAddress,
+            toReportStakingStatusContractAddress: toReportStakingStatusContractAddress
+        });
+        emit ContractRegister(msg.sender, projectName, toBeNotifiedMachineStateUpdateContractAddress, toReportStakingStatusContractAddress);
     }
 
     function deleteRegisteredProjectStakingContract(string calldata projectName, StakingType stakingType) external onlyOwner {
@@ -123,7 +133,7 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
 
     function report(NotifyType tp, string calldata projectName, StakingType stakingType, string calldata machineId) external onlyAuthorizedReporters {
         require(tp == NotifyType.MachineRegister || tp == NotifyType.MachineUnregister || tp == NotifyType.MachineOnline || tp == NotifyType.MachineOffline, "Invalid notify type");
-        address targetContractAddress = projectName2StakingContractAddress[projectName][stakingType];
+        address targetContractAddress = projectName2StakingContractAddress[projectName][stakingType].toBeNotifiedMachineStateUpdateContractAddress;
         if (targetContractAddress == address(0)){
             emit ReportFailed(tp, projectName, stakingType, machineId, "Project not registered");
             return;
@@ -175,12 +185,17 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     }
 
     function reportStakingStatus(string calldata projectName, StakingType stakingType, string calldata id, uint256 gpuNum, bool isStake) external {
-        address targetContractAddress = projectName2StakingContractAddress[projectName][stakingType];
+        address targetContractAddress = projectName2StakingContractAddress[projectName][stakingType].toReportStakingStatusContractAddress;
         require(msg.sender == targetContractAddress, "Only registered staking contract can call this function");
-        // todo
+        dbcContract.reportStakingStatus(id, gpuNum, isStake);
     }
 
     function freeGpuAmount(string calldata _id) external view returns (uint256){
         return dbcContract.freeGpuAmount(_id);
     }
+
+    function getMachineRegion(string calldata _id) public view returns(string memory){
+        return machineInfoContract.getMachineRegion(_id);
+    }
+
 }

@@ -7,4 +7,10 @@ contract DBCStakingContractMock is DBCStakingContract {
     function freeGpuAmount(string calldata) external pure returns (uint256){
         return 1;
     }
+
+    function reportStakingStatus(string calldata , uint256, bool) external{
+
+    }
+
+
 }
