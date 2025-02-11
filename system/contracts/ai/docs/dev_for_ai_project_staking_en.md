@@ -54,4 +54,11 @@ function getMachineInfo(string calldata machineId) external view returns (addres
 ```
 **Description:** Get detailed information about the specified machine. The id can be a machine id or a container id, which is consistent with the resource unit used during registration.
 
+#### `reportStakingStatus`
+```solidity
+function reportStakingStatus(string calldata projectName, StakingType stakingType, uint256 gpuNum, bool isStake) external
+```
+**Description：** Report staking status(start stake：isStake=true，end stake：isStake=false).
+
+
 ---

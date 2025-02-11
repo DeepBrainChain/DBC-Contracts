@@ -131,18 +131,6 @@ mapping(string => MachineState) public machineInProject2States;
 
 ### 公共和外部函数
 
-#### `_authorizeUpgrade`
-```solidity
-function _authorizeUpgrade(address newImplementation) internal override;
-```
-**描述：** 授权升级到新实现。
-
-#### `requestSetUpgradePermission`
-```solidity
-function requestSetUpgradePermission(address _canUpgradeAddress) external pure returns (bytes memory);
-```
-**描述：** 生成用于设置升级权限的 calldata。
-
 #### `setUpgradePermission`
 ```solidity
 function setUpgradePermission(address _canUpgradeAddress) external onlyOwner;
@@ -190,6 +178,12 @@ function getMachineState(string calldata machineId, string calldata projectName,
 function getMachineInfo(string calldata machineId) external view returns (address machineOwner, uint256 calcPoint, uint256 cpuRate, string memory gpuType, uint256 gpuMem, string memory cpuType, uint256 gpuCount);
 ```
 **描述：** 获取机器的详细信息。
+
+#### `reportStakingStatus`
+```solidity
+function reportStakingStatus(string calldata projectName, StakingType stakingType, uint256 gpuNum, bool isStake) external
+```
+**描述：** 上报质押状态(质押：isStake=true，取消质押：isStake=false)。
 
 ---
 

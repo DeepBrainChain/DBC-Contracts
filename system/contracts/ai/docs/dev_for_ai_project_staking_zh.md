@@ -61,5 +61,12 @@ function getMachineInfo(string calldata id) external view returns (address machi
 ```
 **描述：** 获取有关指定机器的详细信息,id可以是机器id或者是容器id,与注册时使用的资源单位一致。
 
+#### `reportStakingStatus`
+```solidity
+function reportStakingStatus(string calldata projectName, StakingType stakingType, uint256 gpuNum, bool isStake) external
+```
+**描述：** 上报质押状态(质押：isStake=true，取消质押：isStake=false)。
+
+
 ---
 
