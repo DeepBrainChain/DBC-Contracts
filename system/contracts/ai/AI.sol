@@ -54,6 +54,7 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     event NotifiedTargetContract(address indexed targetContractAddress, NotifyType tp, string machineId, bool result);
     event DBCContractChanged(address indexed dbcContractAddr);
     event ReportFailed(NotifyType tp, string projectName, StakingType stakingType, string machineId, string reason);
+    event reportedStakingStatus(string projectName, StakingType tp, string machineId, uint256 gpuNum, bool isStake);
 
 /// @notice Initialize the contract, only callable once
     function initialize(address machineInfoContractAddr, address dbcContractAddr, address[] calldata _authorizedReporters) public initializer {
@@ -188,6 +189,7 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         address targetContractAddress = projectName2StakingContractAddress[projectName][stakingType].toReportStakingStatusContractAddress;
         require(msg.sender == targetContractAddress, "Only registered staking contract can call this function");
         dbcContract.reportStakingStatus(id, gpuNum, isStake);
+        emit reportedStakingStatus(projectName, stakingType, id, gpuNum, isStake);
     }
 
     function freeGpuAmount(string calldata _id) external view returns (uint256){
