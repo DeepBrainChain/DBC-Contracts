@@ -53,6 +53,7 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     event MachineStateUpdate(string machineId, string projectName, StakingType stakingType, NotifyType tp);
     event NotifiedTargetContract(address indexed targetContractAddress, NotifyType tp, string machineId, bool result);
     event DBCContractChanged(address indexed dbcContractAddr);
+    event MachineInfoContractChanged(address indexed addr);
     event ReportFailed(NotifyType tp, string projectName, StakingType stakingType, string machineId, string reason);
     event reportedStakingStatus(string projectName, StakingType tp, string machineId, uint256 gpuNum, bool isStake);
 
@@ -113,6 +114,11 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     function setDBCContract(address dbcContractAddr) external onlyOwner {
         dbcContract = DBCStakingContract(dbcContractAddr);
         emit DBCContractChanged(dbcContractAddr);
+    }
+
+    function setMachineInfoContract(address addr) external onlyOwner {
+        machineInfoContract = MachineInfoContract(addr);
+        emit MachineInfoContractChanged(addr);
     }
 
     function registerProjectStakingContract(string calldata projectName, StakingType stakingType, address toBeNotifiedMachineStateUpdateContractAddress, address toReportStakingStatusContractAddress) external {
