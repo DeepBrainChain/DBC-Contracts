@@ -139,6 +139,16 @@ contract Logic is IMachineInfo,Initializable,UUPSUpgradeable,OwnableUpgradeable 
        return abi.decode(returnData, (uint256))*1000;
    }
 
+    function getMachineGPUTypeAndMem(string memory machineId) external view returns (string memory gpuType,uint256 mem){
+        (bool success, bytes memory returnData) = machineInfoPrecompile.staticcall(abi.encodeWithSignature(
+            "getMachineGPUTypeAndMem(string)",
+            machineId
+        ));
+        require(success, string(returnData));
+        return abi.decode(returnData, (string,uint256));
+    }
+
+
     function version() external pure returns (uint256){
         return 1;
     }

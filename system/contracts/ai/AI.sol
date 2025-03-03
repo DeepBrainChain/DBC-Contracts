@@ -169,9 +169,9 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         return (machineInProject2States[key].isOnline, machineInProject2States[key].isRegistered);
     }
 
-    function getMachineInfo(string calldata id, bool isDeepLink) external view returns (address machineOwner,uint256 calcPoint,uint256 cpuRate,string memory gpuType, uint256 gpuMem,string memory cpuType, uint256 gpuCount, string memory machineId){
-        (machineOwner,calcPoint,cpuRate,gpuType, gpuMem,cpuType,gpuCount, machineId,,,) =  machineInfoContract.getMachineInfo(id, isDeepLink);
-        return (machineOwner,calcPoint,cpuRate,gpuType, gpuMem,cpuType,gpuCount, machineId);
+    function getMachineInfo(string calldata id, bool isDeepLink) external view returns (address machineOwner,uint256 calcPoint,uint256 cpuRate,string memory gpuType, uint256 gpuMem,string memory cpuType, uint256 gpuCount, string memory machineId,uint256 mem){
+        (machineOwner,calcPoint,cpuRate,gpuType, gpuMem,cpuType,gpuCount, machineId,,,mem) =  machineInfoContract.getMachineInfo(id, isDeepLink);
+        return (machineOwner,calcPoint,cpuRate,gpuType, gpuMem,cpuType,gpuCount, machineId,mem);
     }
 
     function getKeyOfMachineInProject(string calldata machineId, string calldata projectName, StakingType stakingType) internal pure returns(string memory) {

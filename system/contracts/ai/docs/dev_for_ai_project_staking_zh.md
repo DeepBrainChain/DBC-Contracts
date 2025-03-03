@@ -58,7 +58,7 @@ function getMachineState(string calldata id, string calldata projectName, Stakin
 
 #### `getMachineInfo`
 ```solidity
-function getMachineInfo(string calldata id) external view returns (address machineOwner, uint256 calcPoint, uint256 cpuRate, string memory gpuType, uint256 gpuMem, string memory cpuType, uint256 gpuCount);
+function getMachineInfo(string calldata id) external view returns (address machineOwner, uint256 calcPoint, uint256 cpuRate, string memory gpuType, uint256 gpuMem, string memory cpuType, uint256 gpuCount, uint256 mem);
 ```
 **描述：** 获取有关指定机器的详细信息,id可以是机器id或者是容器id,与注册时使用的资源单位一致。
 

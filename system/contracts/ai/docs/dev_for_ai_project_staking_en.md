@@ -50,7 +50,7 @@ function getMachineState(string calldata machineId, string calldata projectName,
 
 #### `getMachineInfo`
 ```solidity
-function getMachineInfo(string calldata machineId) external view returns (address machineOwner, uint256 calcPoint, uint256 cpuRate, string memory gpuType, uint256 gpuMem, string memory cpuType, uint256 gpuCount);
+function getMachineInfo(string calldata machineId) external view returns (address machineOwner, uint256 calcPoint, uint256 cpuRate, string memory gpuType, uint256 gpuMem, string memory cpuType, uint256 gpuCount,uint256 mem);
 ```
 **Description:** Get detailed information about the specified machine. The id can be a machine id or a container id, which is consistent with the resource unit used during registration.
 

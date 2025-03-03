@@ -59,7 +59,7 @@ contract MachineInfoContractMock is MachineInfoContract {
                 ignore3 = 0;
         }
 
-        function getMachineRegion(string calldata) public view returns(string memory){
+        function getMachineRegion(string calldata) public pure returns(string memory){
                 return "Asia";
         }
 

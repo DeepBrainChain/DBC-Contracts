@@ -84,6 +84,24 @@ verify_ai-dbc-testnet:
 upgrade_ai-dbc-testnet:
 	npx hardhat run scripts/upgrade-ai.ts --network dbc-testnet
 
+deploy-drc20-factory-testnet:
+	npx hardhat run scripts/deploy-drc20-factory.ts --network dbc-testnet
+
+verify-drc20-factory-testnet:
+	source .env && npx hardhat verify --network dbc-testnet $DRC20_FACTORY_CONTRACT
+
+deploy-drc20-factory-mainnet:
+	npx hardhat run scripts/deploy-drc20-factory.ts --network dbc-mainnet
+
+verify-drc20-factory-mainmet:
+	source .env && npx hardhat verify --network dbc-mainnet $DRC20_FACTORY_CONTRACT
+
+verify-drc20-testnet:
+	source .env && npx hardhat verify --network dbc-testnet $DRC20_CONTRACT $DRC20_OWNER $DRC20_NAME $DRC20_SYMBOL $DRC20_SUPPLY
+
+verify-drc20-mainmet:
+	source .env && npx hardhat verify --network dbc-mainnet $DRC20_CONTRACT $DRC20_OWNER $DRC20_NAME $DRC20_SYMBOL $DRC20_SUPPLY
+
 
 
 
