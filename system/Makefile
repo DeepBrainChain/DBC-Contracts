@@ -9,6 +9,8 @@ upgrade-logic:
 
 verify-logic:
 	source .env && npx hardhat verify --network dbc-testnet $LOGIC_CONTRACT_PROXY_CONTRACT
+	source .env && npx hardhat verify --network dbc-mainnet $LOGIC_CONTRACT_PROXY_CONTRACT
+
 
 deploy-register:
 	npx hardhat run scripts/deploy-register.ts --network dbc-testnet
@@ -80,6 +82,8 @@ deploy_ai-dbc-testnet:
 
 verify_ai-dbc-testnet:
 	source .env && npx hardhat verify --network dbc-testnet $AI_PROXY_CONTRACT
+	source .env && npx hardhat verify --network dbc-mainnet $AI_PROXY_CONTRACT
+
 
 upgrade_ai-dbc-testnet:
 	npx hardhat run scripts/upgrade-ai.ts --network dbc-testnet
@@ -101,7 +105,5 @@ verify-drc20-testnet:
 
 verify-drc20-mainmet:
 	source .env && npx hardhat verify --network dbc-mainnet $DRC20_CONTRACT $DRC20_OWNER $DRC20_NAME $DRC20_SYMBOL $DRC20_SUPPLY
-
-
 
 
