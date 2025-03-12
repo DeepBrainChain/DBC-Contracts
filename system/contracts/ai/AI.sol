@@ -206,4 +206,17 @@ contract AI is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         return machineInfoContract.getMachineRegion(_id);
     }
 
+
+    function machineBandWidthInfos(string calldata _machineId) public view returns(
+        address machineOwner,
+        string memory machineId,
+        uint256 cpuCores,
+        uint256 machineMem,
+        string memory region,
+        uint256 hdd,
+        uint256 bandwidth
+    )  {
+        return machineInfoContract.machineBandWidthInfos(_machineId);
+    }
+
 }

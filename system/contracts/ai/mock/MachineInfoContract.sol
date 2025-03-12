@@ -63,4 +63,17 @@ contract MachineInfoContractMock is MachineInfoContract {
                 return "Asia";
         }
 
+        function machineBandWidthInfos(string calldata _machineId) external view returns(
+            address machineOwner,
+            string memory machineId,
+            uint256 cpuCores,
+            uint256 machineMem,
+            string memory region,
+            uint256 hdd,
+            uint256 bandwidth
+        ){
+            return(address(0x0),"1",1,16,"Asia",100,1000);
+        }
+
+
 }

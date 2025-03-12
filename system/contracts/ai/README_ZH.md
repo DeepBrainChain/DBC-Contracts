@@ -8,5 +8,5 @@
 * [AI 项目方相关接口 (中文版)](https://github.com/DeepBrainChain/DBC-Contracts/blob/main/system/contracts/ai/docs/dev_for_ai_project_staking_zh.md)
 ---
 
-### DBC 测试网合约地址: 0xb616A0dad9af4cA23234b65D27176be2c09c720c
+### DBC 测试网合约地址: 0xc0150F59CCD9724806ae3868B68A404c984b90e6
 ### DBC 主网合约地址: 0xa7B9f404653841227AF204a561455113F36d8EC8

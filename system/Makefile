@@ -11,7 +11,6 @@ verify-logic:
 	source .env && npx hardhat verify --network dbc-testnet $LOGIC_CONTRACT_PROXY_CONTRACT
 	source .env && npx hardhat verify --network dbc-mainnet $LOGIC_CONTRACT_PROXY_CONTRACT
 
-
 deploy-register:
 	npx hardhat run scripts/deploy-register.ts --network dbc-testnet
 
