@@ -15,6 +15,9 @@ contract Logic is IMachineInfo,Initializable,UUPSUpgradeable,OwnableUpgradeable 
     address private constant machineInfoPrecompile = address(0x0000000000000000000000000000000000000803);
 
     address public canUpgradeAddress;
+    address private constant dlcPricePrecompile = address(0x0000000000000000000000000000000000000802);
+
+
     event AuthorizedUpgrade(address indexed _canUpgradeAddress);
 
     function initialize() public initializer {
@@ -146,6 +149,14 @@ contract Logic is IMachineInfo,Initializable,UUPSUpgradeable,OwnableUpgradeable 
         ));
         require(success, string(returnData));
         return abi.decode(returnData, (string,uint256));
+    }
+
+    function getDLCPrice() external view returns (uint256){
+        (bool success, bytes memory returnData) = dlcPricePrecompile.staticcall(abi.encodeWithSignature(
+            "getDLCPrice()"
+        ));
+        require(success, string(returnData));
+        return abi.decode(returnData, (uint256));
     }
 
 

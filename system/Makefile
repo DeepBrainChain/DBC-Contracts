@@ -3,9 +3,13 @@ compile:
 
 deploy-logic:
 	npx hardhat run scripts/deploy-logic.ts --network dbc-testnet
+	npx hardhat run scripts/deploy-logic.ts --network dbc-mainnet
+
 
 upgrade-logic:
 	npx hardhat run scripts/upgrade-logic.ts --network dbc-testnet
+	npx hardhat run scripts/upgrade-logic.ts --network dbc-mainnet
+
 
 verify-logic:
 	source .env && npx hardhat verify --network dbc-testnet $LOGIC_CONTRACT_PROXY_CONTRACT

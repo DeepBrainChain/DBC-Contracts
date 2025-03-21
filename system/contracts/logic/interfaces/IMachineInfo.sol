@@ -12,4 +12,7 @@ interface IMachineInfo {
     function getUSDTMachineRentFee(string memory machineId,uint256 rentBlocks,uint256 rentGpuCount) external view returns (uint256);
     function getDLCRentFeeByCalcPoint(uint256 calcPoint,uint256 rentBlocks,uint256 rentGpuCount,uint256 totalGpuCount) external view returns (uint256);
     function getMachineGPUTypeAndMem(string memory machineId) external view returns (string memory gpuType,uint256 mem);
+
+    function getDLCPrice() external view returns (uint256);
+//    function getDBCAmountByValue(uint256 amount) external view returns (uint256);
 }
